@@ -14,5 +14,9 @@ public class MainController {
 		model.addAttribute("title", "FuriCali");
 		return "index";
 	}
+	@GetMapping("/nuser")
+	public String new_user(Model model) {
+		return "nuser";
+	}
 	
 }
