@@ -18,5 +18,8 @@ public class MainController {
 	public String new_user(Model model) {
 		return "nuser";
 	}
-	
+	@GetMapping("/login")
+	public String login(Model model) {
+		return "login";
+	}
 }
