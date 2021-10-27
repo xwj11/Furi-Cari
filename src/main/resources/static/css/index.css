@@ -1,6 +1,11 @@
 @charset "UTF-8";
 
-p {
-	color: red;
+.header {
+	height: 100px;
 }
+.button a {
+	font-size: 30px;
+	margin: 30px;
+}
+
 
