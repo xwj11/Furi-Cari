@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<!-- thymeleafを使うためのhtmlタグ -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+　　<meta charset="UTF-8">
+　　<link th:href="@{/css/nuser.css}" rel="stylesheet">
+　　<title th:text="${title}"></title>
+</head>
+<body>
+   <h1 th:text="${title}"></h1>
+   <p>入力内容をご確認ください</p>
+
+   <div th:object="${userForm}">
+   <p th:text="*{nickname}"></p>
+   <p th:text="*{mail}"></p>
+   <p th:text="*{password}"></p> 
+   </div>
+	
+</body>
+</html>
