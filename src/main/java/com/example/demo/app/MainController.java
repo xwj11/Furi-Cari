@@ -9,19 +9,23 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/furicali")
+@RequestMapping("/furicari")
 public class MainController {
 
 	@GetMapping("/index")
 	public String index(Model model) {
-		model.addAttribute("title", "FuriCali");
+		model.addAttribute("title", "FuriCari");
 		return "index";
 	}
+	
+	//êVãKìoò^
 	@GetMapping("/nuser")
-	public String new_user(UserForm userform,
+	public String new_user(UserForm userForm,
 			Model model) {
 		return "nuser";
 	}
+	
+	//ämîFÉyÅ[ÉW
 	@PostMapping("/finish")
 	public String finish(@Validated UserForm userForm,
 			BindingResult result,
@@ -30,6 +34,13 @@ public class MainController {
 			return "/nuser";
 		}
 		return "/finish";
+	}
+	
+	//êVãKìoò^Ç…ñﬂÇÈ
+	@PostMapping("/nuser")
+	public String go_back(UserForm userForm,
+			Model model) {
+		return "nuser";
 	}
 	
 
