@@ -14,7 +14,13 @@
    <p th:text="*{nickname}"></p>
    <p th:text="*{mail}"></p>
    <p th:text="*{password}"></p> 
-   </div>
 	
+   <form method="post" action="#" th:action="@{/furicari/nuser}">
+	<input type="hidden" name="nickname" th:value="*{nickname}">
+	<input type="hidden" name="mail" th:value="*{mail}">
+	<input type="hidden" name="password" th:value="*{password}">
+	<input type="submit" value="戻る">
+   </form>
+   </div>
 </body>
 </html>
