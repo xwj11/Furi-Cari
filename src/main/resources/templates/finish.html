@@ -21,6 +21,13 @@
 	<input type="hidden" name="password" th:value="*{password}">
 	<input type="submit" value="戻る">
    </form>
+   
+   <form method="post" action="#" th:action="@{/furicari/complete}">
+	<input type="hidden" name="nickname" th:value="*{nickname}">
+	<input type="hidden" name="mail" th:value="*{mail}">
+	<input type="hidden" name="password" th:value="*{password}">
+	<input type="submit" value="登録">
+   </form>
    </div>
 </body>
 </html>

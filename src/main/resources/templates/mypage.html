@@ -2,17 +2,28 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<link th:href="@{/css/index.css}" rel="stylesheet">
-<title>Insert title here</title>
+<link th:href="@{/css/mypage.css}" rel="stylesheet">
+<title th:text="FuriCari- + ${title}">Insert title here</title>
 </head>
 <body>
-	<h1>マイページ</h1>
-	<p>ユーザー名：<br>
-    <input type="text" name="name"></p>
-    <p>メールアドレス：<br>
-    <input type="text" name="mail"></p>
-    <p>パスワード：<br>
-    <input type="text" name="パスワード"></p>
-    <p><input type="button" value="更新" id="button2"></p>
+　　<div class="main">
+	<h1 th:text="FuriCari- + ${title}"></h1>
+	
+	<table class="form" border="1" cellpadding="30" cellspacing="0">
+	  <tr>
+	    <td>ユーザー名</td>
+	    <td><input type="text" name="name"></input></td>
+	  </tr>
+	  <tr>
+	    <td>メールアドレス</td>
+	    <td><input type="text" name="mail"></input></td>
+	  </tr>
+	  <tr>
+	    <td>パスワード</td>
+	    <td><input type="text" name="password"></input></td>
+	  </tr>
+	</table>
+    <p><input class="button" type="button" value="更新" id="button2"></p>
+  </div>
 </body>
 </html>
