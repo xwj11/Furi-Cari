@@ -14,5 +14,18 @@
   		<a href="#">マイページ</a>
   	</div>
   </div>
+  
+  <table>
+	<tr>
+		<th>id</th><th>name</th><th>email</th><th>contents</th><th>datetime</th>
+	</tr>
+	<tr th:each="user : ${userList}">
+		<td th:text="${user.id}"></td>
+		<td th:text="${user.nickname}"></td>
+		<td th:text="${user.mail}"></td>
+		<td th:text="${user.password}"></td>
+	</tr>
+　　</table>
+  
 </body>
 </html>

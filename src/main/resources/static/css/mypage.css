@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+.main{
+	margin-top: 50px;
+	text-align: center;
+}
+.form{
+	margin-left: auto;
+    margin-right: auto;
+    margin-top: 50px;
+}
+.form td{
+	text-align: left;
+	width: 200px;
+}
+
+input{
+	height: 30px;
+	width: 200px;
+}
+
+.button{
+	height: 50px;
+}
