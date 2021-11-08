@@ -1,14 +1,19 @@
 package com.example.demo.app;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class UserForm {
 	
-	@NotNull
+	@NotBlank
+	@Size(min = 1,max = 4,message = "１～４文字で入力してください")
 	private String nickname;
-	@NotNull
+	@Email(message="emailを入力してください")
 	private String mail;
-	@NotNull
+	@NotBlank
+	@Size(min = 4,max = 8,message = "4文字以上8文字以内の半角英数字混合で入力してください")
 	private String password;
 	
 	public UserForm() {
