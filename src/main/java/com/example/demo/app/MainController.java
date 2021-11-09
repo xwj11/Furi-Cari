@@ -1,6 +1,7 @@
 package com.example.demo.app;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -89,7 +90,28 @@ public class MainController {
 	}
 	
 	@GetMapping("/login")
-	public String login(Model model) {
+	public String login(LoginForm loginForm,Model model) {
 		return "login";
 	}
+	/**/
+	@PostMapping("/index")
+	public String index(@Validated LoginForm loginForm,
+			BindingResult result,
+			Model model) {
+		
+		if(result.hasErrors()) {	
+			//ÉGÉâÅ[éû	
+			return "login";
+		}
+		//DBèàóù
+		User user = new User();
+		user.setMail(loginForm.getMail());
+		user.setPassword(loginForm.getPassword());
+		
+		Map<String,Object> getLogin = userService.loginData(user);
+		
+		model.addAttribute("getLogin", getLogin);
+		return "index";
+	}
+	
 }

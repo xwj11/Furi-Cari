@@ -1,6 +1,7 @@
 package com.example.demo.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +41,22 @@ public class UserDaoImpl implements UserDao {
 			list.add(user);
 		}
 		return list;
+	}
+	
+
+	public Map<String, Object> loginDataUser(User user){
+		
+		//String sql = "SELECT * FROM user WHERE mail = 'user.getMail()' AND password = 'user.getPassword()'";
+		Map<String, Object> loginUserData = jdbcTemplate.queryForMap("SELECT * FROM user WHERE mail = ? AND password = ?",user.getMail(),user.getPassword());
+		
+		Map<String, Object> getLogin = new HashMap<>();
+		User userLogin = new User();
+		userLogin.setMail((String)loginUserData.get("mail"));
+		userLogin.setPassword((String)loginUserData.get("password"));		
+		getLogin.put("mail",userLogin.getMail());
+		getLogin.put("password",userLogin.getPassword());
+		return getLogin;
+	
 	}
 
 }

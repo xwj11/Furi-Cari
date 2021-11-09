@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,9 +23,16 @@ public class UserServiceImpl implements UserService {
 		userdao.createUser(user);
 	}
 
-	@Override
 	public List<User> getAll() {
 		return userdao.getAll();
 	}
+	
+	@Override
+	public Map<String,Object> loginData(User user) {
+		return userdao.loginDataUser(user);
+		
+	}
+
+	
 
 }
