@@ -9,12 +9,21 @@
 </head>
 <body>
 	<h1>ログイン画面</h1>
-	<p>ユーザー名またはメールアドレス<br>
-	<input type="text" name="name"></p>
-	<p>パスワード<br>
-	<input type="text" name="パスワード"></p>
 	
-	<!--  -->
-	<p><a href="#"><input type="button" value="ログイン" id="button2"></a></p>
+	
+	<!-- ↓↓↓↓↓↓　トップページ（index）に送るフォーム　↓↓↓↓↓↓↓ -->
+	
+	<form method="post" action="#" th:action="@{/furicari/index}" th:object="${loginForm}">		
+		<label for="mail">mail:</label>
+		<input id="mail" name="mail" type="text" th:value="*{mail}"><br>
+		<div th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></div>
+		
+		<label for="password">password:</label>
+		<textarea name="password" id="password" rows="2" cols="20" th:field="*{password}"></textarea><br>
+		<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+		<input type="submit" value="ログイン">
+	</form>
+	
+   <!-- ↑↑↑↑↑↑↑　トップページ（index）に送るフォーム　↑↑↑↑↑↑↑ -->
 </body>
 </html>

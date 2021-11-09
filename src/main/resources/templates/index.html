@@ -14,7 +14,18 @@
   		<a href="#">マイページ</a>
   	</div>
   </div>
-  
+ <th:block th:if="${!(getLogin == false)}">
+   <table>
+	<tr>
+		<th>email</th><th>password</th>
+	</tr>
+	<tr>		
+		<td th:text="${getLogin.mail}"></td>
+		<td th:text="${getLogin.password}"></td>
+	</tr>
+　　</table> 
+</th:block>
+ <th:block th:if="${getLogin == false}">
   <table>
 	<tr>
 		<th>id</th><th>name</th><th>email</th><th>contents</th><th>datetime</th>
@@ -26,6 +37,9 @@
 		<td th:text="${user.password}"></td>
 	</tr>
 　　</table>
-  
+</th:block>
+ <!--  -->
+ 
+
 </body>
 </html>
