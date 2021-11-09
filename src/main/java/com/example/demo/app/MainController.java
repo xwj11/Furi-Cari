@@ -86,6 +86,7 @@ public class MainController {
 	@GetMapping("/mypage")
 	public String mypage(Model model) {
 		model.addAttribute("title", "マイページ");
+		
 		return "mypage";
 	}
 	
