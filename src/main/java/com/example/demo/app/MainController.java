@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.thymeleaf.exceptions.TemplateInputException;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
@@ -110,9 +111,15 @@ public class MainController {
 		user.setPassword(loginForm.getPassword());
 		
 		Map<String,Object> getLogin = userService.loginData(user);
-		
-		model.addAttribute("getLogin", getLogin);
-		return "index";
+		boolean isEmpty = getLogin.isEmpty();
+		try {
+			
+			model.addAttribute("isEmpty", isEmpty);
+			model.addAttribute("getLogin", getLogin);
+			return "index";
+		}catch(TemplateInputException e){
+			return "login";
+		}
 	}
 	
 }

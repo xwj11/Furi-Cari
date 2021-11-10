@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -50,18 +51,24 @@ public class UserDaoImpl implements UserDao {
 	
 
 	public Map<String, Object> loginDataUser(User user){
+		//Map<String, Object> inMail_inPw_Count = jdbcTemplate.queryForMap("SELECT EXISTS(SELECT * FROM user WHERE mail = ? AND password = ?)",user.getMail(),user.getPassword());
 		
-		//String sql = "SELECT * FROM user WHERE mail = 'user.getMail()' AND password = 'user.getPassword()'";
-		Map<String, Object> loginUserData = jdbcTemplate.queryForMap("SELECT * FROM user WHERE mail = ? AND password = ?",user.getMail(),user.getPassword());
-		
-		Map<String, Object> getLogin = new HashMap<>();
-		User userLogin = new User();
-		userLogin.setMail((String)loginUserData.get("mail"));
-		userLogin.setPassword((String)loginUserData.get("password"));		
-		getLogin.put("mail",userLogin.getMail());
-		getLogin.put("password",userLogin.getPassword());
-		return getLogin;
-	
+		try {
+			Map<String, Object> loginUserData = jdbcTemplate.queryForMap("SELECT * FROM user WHERE mail = ? AND password = ?",user.getMail(),user.getPassword());
+			Map<String, Object> getLogin = new HashMap<>();
+			User userLogin = new User();
+			userLogin.setNickname((String)loginUserData.get("nickname"));
+			userLogin.setMail((String)loginUserData.get("mail"));
+			userLogin.setPassword((String)loginUserData.get("password"));				
+			getLogin.put("nickname",userLogin.getNickname());
+			getLogin.put("mail",userLogin.getMail());
+			getLogin.put("password",userLogin.getPassword());
+			return getLogin;
+		} catch (EmptyResultDataAccessException e) {
+          System.out.println("ó·äOÇ™î≠ê∂ÇµÇ‹ÇµÇΩ");
+          Map<String, Object> notLogin = new HashMap<>();
+          return notLogin;
+        }
 	}
 
 }
