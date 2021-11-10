@@ -99,7 +99,8 @@ public class MainController {
 	@PostMapping("/index")
 	public String index(@Validated LoginForm loginForm,
 			BindingResult result,
-			Model model) {
+			Model model,
+			RedirectAttributes redirectAttributes) {
 		
 		if(result.hasErrors()) {	
 			//エラー時	
@@ -113,8 +114,9 @@ public class MainController {
 		Map<String,Object> getLogin = userService.loginData(user);
 		boolean isEmpty = getLogin.isEmpty();
 		model.addAttribute("getLogin", getLogin);
+		
 		if(isEmpty) {
-			model.addAttribute("error", "メールアドレスまたはパスワードが間違っています");
+			redirectAttributes.addFlashAttribute("error", "メールアドレスまたはパスワードが間違っています");
 			return "redirect:/furicari/login";
 		}else {
 			return "index";
