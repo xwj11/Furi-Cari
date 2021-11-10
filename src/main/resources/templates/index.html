@@ -7,25 +7,35 @@
 　　<title th:text="${title}"></title>
 </head>
 <body>
+  <p th:text="${isEmpty}"></p>
+  
   <div class="header">
   	<div class="button">
-  		<a href="#">ログイン</a>
-  		<a href="#">新規登録</a>
-  		<a href="#">マイページ</a>
+  		<th:block th:unless="${getLogin}">
+	  		<a href="login">ログイン</a>
+	  		<a href="nuser">新規登録</a>
+	  	</th:block>
+  		<th:block th:if="${getLogin}">
+  			<a href="mypage" th:text="${getLogin.nickname}"></a>
+  			<a href="#">ログアウト</a>
+  		</th:block>
   	</div>
   </div>
- <th:block th:if="${!(getLogin == false)}">
+ <!-- ↓いずれ消すやつ↓ -->
+ <th:block th:if="${getLogin}">
    <table>
 	<tr>
-		<th>email</th><th>password</th>
+		<th>ニックネーム</th><th>メールアドレス</th><th>パスワード</th>
 	</tr>
-	<tr>		
+	<tr>
+		<td th:text="${getLogin.nickname}"></td>		
 		<td th:text="${getLogin.mail}"></td>
 		<td th:text="${getLogin.password}"></td>
 	</tr>
-　　</table> 
-</th:block>
- <th:block th:if="${getLogin == false}">
+　　</table>
+<!-- ↑いずれ消すやつ↑ -->
+</th:block> <!--  -->
+ <th:block th:unless="${getLogin}">
   <table>
 	<tr>
 		<th>id</th><th>name</th><th>email</th><th>contents</th><th>datetime</th>
