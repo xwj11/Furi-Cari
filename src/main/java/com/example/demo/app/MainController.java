@@ -112,14 +112,14 @@ public class MainController {
 		
 		Map<String,Object> getLogin = userService.loginData(user);
 		boolean isEmpty = getLogin.isEmpty();
-		try {
-			
-			model.addAttribute("isEmpty", isEmpty);
-			model.addAttribute("getLogin", getLogin);
+		model.addAttribute("getLogin", getLogin);
+		if(isEmpty) {
+			model.addAttribute("error", "メールアドレスまたはパスワードが間違っています");
+			return "redirect:/furicari/login";
+		}else {
 			return "index";
-		}catch(TemplateInputException e){
-			return "login";
 		}
+		
 	}
 	
 }
