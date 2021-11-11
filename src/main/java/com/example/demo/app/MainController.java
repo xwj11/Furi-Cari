@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.exceptions.TemplateInputException;
 
@@ -19,9 +21,18 @@ import com.example.demo.service.UserService;
 
 @Controller
 @RequestMapping("/furicari")
+@SessionAttributes("userForm")
 public class MainController {
-
+	
 	private final UserService userService;
+	
+	
+	@ModelAttribute("userForm")
+	  public UserForm setuserForm() { 
+		  return new UserForm(); 
+    }
+	
+
 	
 	@Autowired
 	public MainController(UserService userService) {
@@ -85,7 +96,8 @@ public class MainController {
 	
 
 	@GetMapping("/mypage")
-	public String mypage(Model model) {
+	public String mypage(UserForm userForm,
+			Model model) {
 		model.addAttribute("title", "マイページ");
 		
 		return "mypage";
@@ -98,6 +110,7 @@ public class MainController {
 	/**/
 	@PostMapping("/index")
 	public String index(@Validated LoginForm loginForm,
+			UserForm userForm,
 			BindingResult result,
 			Model model) {
 		
@@ -107,13 +120,20 @@ public class MainController {
 		}
 		//DB処理
 		User user = new User();
+		
 		user.setMail(loginForm.getMail());
 		user.setPassword(loginForm.getPassword());
 		
 		Map<String,Object> getLogin = userService.loginData(user);
+		
+		//セッションのuserFormにセット↓
+		userForm.setNickname((String)getLogin.get("nickname"));
+		userForm.setMail((String)getLogin.get("mail"));
+		userForm.setPassword((String)getLogin.get("password"));
+		//セッションのuserFormにセット↑
+		
 		boolean isEmpty = getLogin.isEmpty();
 		try {
-			
 			model.addAttribute("isEmpty", isEmpty);
 			model.addAttribute("getLogin", getLogin);
 			return "index";
