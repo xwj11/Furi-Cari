@@ -9,8 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.thymeleaf.exceptions.TemplateInputException;
 
@@ -19,9 +21,18 @@ import com.example.demo.service.UserService;
 
 @Controller
 @RequestMapping("/furicari")
+@SessionAttributes("userForm")
 public class MainController {
-
+	
 	private final UserService userService;
+	
+	
+	@ModelAttribute("userForm")
+	  public UserForm setuserForm() { 
+		  return new UserForm(); 
+    }
+	
+
 	
 	@Autowired
 	public MainController(UserService userService) {
@@ -37,14 +48,14 @@ public class MainController {
 		return "index";
 	}
 	
-	//V‹K“o˜^
+	//æ–°è¦ç™»éŒ²
 	@GetMapping("/nuser")
 	public String new_user(UserForm userForm,
 			Model model) {
 		return "nuser";
 	}
 	
-	//Šm”Fƒy[ƒW
+	//ç¢ºèªãƒšãƒ¼ã‚¸
 	@PostMapping("/finish")
 	public String finish(@Validated UserForm userForm,
 			BindingResult result,
@@ -55,14 +66,14 @@ public class MainController {
 		return "/finish";
 	}
 	
-	//V‹K“o˜^‚É–ß‚é
+	//æ–°è¦ç™»éŒ²ã«æˆ»ã‚‹
 	@PostMapping("/nuser")
 	public String go_back(UserForm userForm,
 			Model model) {
 		return "nuser";
 	}
 	
-	//DB‚Ö“o˜^
+	//DBã¸ç™»éŒ²
 	@PostMapping("/complete")
 	public String complete(@Validated UserForm userForm,
 			BindingResult result,
@@ -72,21 +83,22 @@ public class MainController {
 			model.addAttribute("title", "InquiryForm");
 			return "nuser";
 		}
-		//DBˆ—
+		//DBå‡¦ç†
 		User user = new User();
 		user.setNickname(userForm.getNickname());
 		user.setMail(userForm.getMail());
 		user.setPassword(userForm.getPassword());
 		
 		userService.create(user);
-		redirectAttributes.addFlashAttribute("complete", "Š®—¹‚µ‚Ü‚µ‚½");
+		redirectAttributes.addFlashAttribute("complete", "å®Œäº†ã—ã¾ã—ãŸ");
 		return "redirect:/furicari/nuser";
 	}
 	
 
 	@GetMapping("/mypage")
-	public String mypage(Model model) {
-		model.addAttribute("title", "ƒ}ƒCƒy[ƒW");
+	public String mypage(UserForm userForm,
+			Model model) {
+		model.addAttribute("title", "ãƒã‚¤ãƒšãƒ¼ã‚¸");
 		
 		return "mypage";
 	}
@@ -98,25 +110,36 @@ public class MainController {
 	/**/
 	@PostMapping("/index")
 	public String index(@Validated LoginForm loginForm,
+			UserForm userForm,
 			BindingResult result,
 			Model model,
 			RedirectAttributes redirectAttributes) {
 		
 		if(result.hasErrors()) {	
-			//ƒGƒ‰[	
+			//ã‚¨ãƒ©ãƒ¼æ™‚	
 			return "login";
 		}
-		//DBˆ—
+		//DBå‡¦ç†
 		User user = new User();
+		
 		user.setMail(loginForm.getMail());
 		user.setPassword(loginForm.getPassword());
 		
 		Map<String,Object> getLogin = userService.loginData(user);
+		
+		//ã‚»ãƒƒã‚·ãƒ§ãƒ³ã®userFormã«ã‚»ãƒƒãƒˆâ†“
+		userForm.setNickname((String)getLogin.get("nickname"));
+		userForm.setMail((String)getLogin.get("mail"));
+		userForm.setPassword((String)getLogin.get("password"));
+		//ã‚»ãƒƒã‚·ãƒ§ãƒ³ã®userFormã«ã‚»ãƒƒãƒˆâ†‘
+		
 		boolean isEmpty = getLogin.isEmpty();
+
+
 		model.addAttribute("getLogin", getLogin);
 		
 		if(isEmpty) {
-			redirectAttributes.addFlashAttribute("error", "ƒ[ƒ‹ƒAƒhƒŒƒX‚Ü‚½‚ÍƒpƒXƒ[ƒh‚ªŠÔˆá‚Á‚Ä‚¢‚Ü‚·");
+			redirectAttributes.addFlashAttribute("error", "ãƒ¡ãƒ¼ãƒ«ã‚¢ãƒ‰ãƒ¬ã‚¹ã¾ãŸã¯ãƒ‘ã‚¹ãƒ¯ãƒ¼ãƒ‰ãŒé–“é•ã£ã¦ã„ã¾ã™");
 			return "redirect:/furicari/login";
 		}else {
 			return "index";

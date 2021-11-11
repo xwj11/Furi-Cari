@@ -15,6 +15,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.demo.app.UserForm;
 import com.example.demo.entity.User;
 
 @Repository
@@ -59,7 +60,11 @@ public class UserDaoImpl implements UserDao {
 			User userLogin = new User();
 			userLogin.setNickname((String)loginUserData.get("nickname"));
 			userLogin.setMail((String)loginUserData.get("mail"));
-			userLogin.setPassword((String)loginUserData.get("password"));				
+			userLogin.setPassword((String)loginUserData.get("password"));
+			
+			 
+			 
+			
 			getLogin.put("nickname",userLogin.getNickname());
 			getLogin.put("mail",userLogin.getMail());
 			getLogin.put("password",userLogin.getPassword());
