@@ -9,7 +9,7 @@
 </head>
 <body>
 	<h1>ログイン画面</h1>
-	
+	<p th:text="*{error}"></p>
 	
 	<!-- ↓↓↓↓↓↓　トップページ（index）に送るフォーム　↓↓↓↓↓↓↓ -->
 	<th:block th:if="${loginForm}">
@@ -25,5 +25,6 @@
 		</form>
 	</th:block>
    <!-- ↑↑↑↑↑↑↑　トップページ（index）に送るフォーム　↑↑↑↑↑↑↑ -->
+   
 </body>
 </html>
