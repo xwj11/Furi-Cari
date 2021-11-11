@@ -11,26 +11,26 @@
   
   <div class="header">
   	<div class="button">
-  		<th:block th:unless="${getLogin}">
+  		<th:block th:unless="${userForm}">
 	  		<a href="login">ログイン</a>
 	  		<a href="nuser">新規登録</a>
 	  	</th:block>
-  		<th:block th:if="${getLogin}">
-  			<a href="mypage" th:text="${getLogin.nickname}"></a>
+  		<th:block th:if="${userForm}">
+  			<a href="mypage" th:text="${userForm.nickname}"></a>
   			<a href="#">ログアウト</a>
   		</th:block>
   	</div>
   </div>
  <!-- ↓いずれ消すやつ↓ -->
- <th:block th:if="${getLogin}">
+ <th:block th:if="${userForm}">
    <table>
 	<tr>
 		<th>ニックネーム</th><th>メールアドレス</th><th>パスワード</th>
 	</tr>
 	<tr>
-		<td th:text="${getLogin.nickname}"></td>		
-		<td th:text="${getLogin.mail}"></td>
-		<td th:text="${getLogin.password}"></td>
+		<td th:text="${userForm.nickname}"></td>		
+		<td th:text="${userForm.mail}"></td>
+		<td th:text="${userForm.password}"></td>
 	</tr>
 　　</table>
 <!-- ↑いずれ消すやつ↑ -->
