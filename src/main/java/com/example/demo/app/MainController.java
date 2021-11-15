@@ -127,6 +127,7 @@ public class MainController {
 		
 		Map<String,Object> getLogin = userService.loginData(user);
 		
+		
 		//セッションのuserFormにセット↓
 		userForm.setNickname((String)getLogin.get("nickname"));
 		userForm.setMail((String)getLogin.get("mail"));
@@ -142,7 +143,7 @@ public class MainController {
 			redirectAttributes.addFlashAttribute("error", "メールアドレスまたはパスワードが間違っています");
 			return "redirect:/furicari/login";
 		}else {
-			return "index";
+			return "redirect:/furicari/index";
 		}
 		
 	}
