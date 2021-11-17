@@ -28,20 +28,20 @@ public class UserDaoImpl implements UserDao {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 	
-	@Override
+
 	public void createUser(User user) {
 		jdbcTemplate.update("INSERT INTO user(nickname, mail, password) VALUES(?, ?, ?)",
 				user.getNickname(), user.getMail(), user.getPassword());
 	}
 
-	@Override
+
 	public List<User> getAll() {
 		String sql = "SELECT id, nickname, mail, password FROM user";
 		List<Map<String, Object>> resultList = jdbcTemplate.queryForList(sql);
 		List<User> list = new ArrayList<User>();
 		for(Map<String, Object> result : resultList) {
 			User user = new User();
-			user.setId((int)result.get("id"));
+			//user.setId((int)result.get("id"));
 			user.setNickname((String)result.get("nickname"));
 			user.setMail((String)result.get("mail"));
 			user.setPassword((String)result.get("password"));			
@@ -56,7 +56,7 @@ public class UserDaoImpl implements UserDao {
 		
 		try {
 			Map<String, Object> loginUserData = jdbcTemplate.queryForMap("SELECT * FROM user WHERE mail = ? AND password = ?",user.getMail(),user.getPassword());
-			Map<String, Object> getLogin = new HashMap<>();
+			Map<String, Object> getLogin = new HashMap<String, Object>();
 			User userLogin = new User();
 			userLogin.setNickname((String)loginUserData.get("nickname"));
 			userLogin.setMail((String)loginUserData.get("mail"));
@@ -70,8 +70,8 @@ public class UserDaoImpl implements UserDao {
 			getLogin.put("password",userLogin.getPassword());
 			return getLogin;
 		} catch (EmptyResultDataAccessException e) {
-          System.out.println("ó·äOÇ™î≠ê∂ÇµÇ‹ÇµÇΩ");
-          Map<String, Object> notLogin = new HashMap<>();
+          System.out.println("ÔøΩÔøΩOÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩÔøΩ‹ÇÔøΩÔøΩÔøΩ");
+          Map<String, Object> notLogin = new HashMap<String, Object>();
           return notLogin;
         }
 	}
