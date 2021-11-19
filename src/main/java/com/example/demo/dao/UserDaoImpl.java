@@ -67,13 +67,12 @@ public class UserDaoImpl implements UserDao {
 			userLogin.setNickname((String)loginUserData.get("nickname"));
 			userLogin.setMail((String)loginUserData.get("mail"));
 			userLogin.setPassword((String)loginUserData.get("password"));
-			
+			userLogin.setId((int)loginUserData.get("id"));
 			 
-			 
-			
 			getLogin.put("nickname",userLogin.getNickname());
 			getLogin.put("mail",userLogin.getMail());
 			getLogin.put("password",userLogin.getPassword());
+			getLogin.put("id",userLogin.getId());
 			return getLogin;
 		} catch (EmptyResultDataAccessException e) {
           System.out.println("��O���������܂���");
