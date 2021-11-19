@@ -3,6 +3,8 @@ package com.example.demo.app;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.exceptions.TemplateInputException;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
@@ -73,12 +75,18 @@ public class MainController {
 		return "nuser";
 	}
 	
+	@RequestMapping("/logout")
+	public String logout(SessionStatus sessionStatus ) {
+		sessionStatus.setComplete();
+		return "redirect:/furicari/index";
+	}
 	//DBへ登録
 	@PostMapping("/complete")
 	public String complete(@Validated UserForm userForm,
 			BindingResult result,
 			Model model,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes,
+			SessionStatus sessionStatus) {
 		if(result.hasErrors()) {
 			model.addAttribute("title", "InquiryForm");
 			return "nuser";
@@ -91,6 +99,7 @@ public class MainController {
 		
 		userService.create(user);
 		redirectAttributes.addFlashAttribute("complete", "完了しました");
+		sessionStatus.setComplete();
 		return "redirect:/furicari/nuser";
 	}
 	
