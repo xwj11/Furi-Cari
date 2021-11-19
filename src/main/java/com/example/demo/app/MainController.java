@@ -100,7 +100,7 @@ public class MainController {
 		userService.create(user);
 		redirectAttributes.addFlashAttribute("complete", "完了しました");
 		sessionStatus.setComplete();
-		return "redirect:/furicari/nuser";
+		return "register";
 	}
 	
 
