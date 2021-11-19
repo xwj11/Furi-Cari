@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<!-- thymeleafを使うためのhtmlタグ -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+　　<meta charset="UTF-8">
+　　<title th:text="${title}"></title>
+</head>
+<body>
+
+
+	<p>登録完了しました!!!!</p>
+    <h2 th:text="${complete}"></h2>
+    <form method="post" action="#" th:action="@{/furicari/index}">
+<!-- 	<input type="hidden" name="nickname" th:value="*{nickname}">
+	<input type="hidden" name="mail" th:value="*{mail}">
+	<input type="hidden" name="password" th:value="*{password}"> -->
+	<input type="submit" value="ログインページへ">
+   </form>
+ 
+   
+
+</body>
+</html>
