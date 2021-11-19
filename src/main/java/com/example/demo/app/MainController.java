@@ -140,7 +140,7 @@ public class MainController {
 	public String login(LoginForm loginForm,Model model) {
 		return "login";
 	}
-	/**/
+	
 	@PostMapping("/index")
 	public String index(@Validated LoginForm loginForm,
 			UserForm userForm,
@@ -148,10 +148,28 @@ public class MainController {
 			Model model,
 			RedirectAttributes redirectAttributes) {
 		
-		if(result.hasErrors()) {	
-			//エラー時	
-			return "login";
+		//バリデーション
+		final int checkNumber = 0;
+		int checker = checkNumber;
+		if(loginForm.getMail() == null) {
+			redirectAttributes.addFlashAttribute("notMail", "メールを入力してください");	
+			checker ++;
+		}else {
+			int checkMail = loginForm.getMail().indexOf("@");
+			if(checkMail == -1) {
+				redirectAttributes.addFlashAttribute("notMail", "正しいメールアドレスを入力してください"); 
+				checker ++;
+			}
 		}
+		if(loginForm.getPassword() == null) {
+			redirectAttributes.addFlashAttribute("nullPassword", "パスワードを入力してください");
+			checker ++;
+		}
+		if(checker > checkNumber) {
+			checker = checkNumber;
+			return "redirect:/furicari/login";
+		}
+			
 		//DB処理
 		User user = new User();
 		
@@ -165,19 +183,15 @@ public class MainController {
 		userForm.setMail((String)getLogin.get("mail"));
 		userForm.setPassword((String)getLogin.get("password"));
 		userForm.setId((int)getLogin.get("id"));
-		
 		//セッションのuserFormにセット↑
-		
+    
 		boolean isEmpty = getLogin.isEmpty();
-
-
-		model.addAttribute("getLogin", getLogin);
-		
+		model.addAttribute("getLogin", getLogin);		
 		if(isEmpty) {
 			redirectAttributes.addFlashAttribute("error", "メールアドレスまたはパスワードが間違っています");
 			return "redirect:/furicari/login";
 		}else {
-			return "index";
+			return "redirect:/furicari/index";
 		}
 		
 	}

@@ -13,14 +13,22 @@
 	
 	<!-- ↓↓↓↓↓↓　トップページ（index）に送るフォーム　↓↓↓↓↓↓↓ -->
 	<th:block th:if="${loginForm}">
-		<form method="post" action="#" th:action="@{/furicari/index}" th:object="${loginForm}">		
+		<form method="post" action="#" th:action="@{/furicari/index}" th:object="${loginForm}">	
+		
+			<!-- メールアドレス入力フォーム -->	
+			<p th:text="${Mail}"></p>
 			<label for="mail">mail:</label>
+			<p th:text="${notMail}"></p>
 			<input id="mail" name="mail" type="text" th:value="*{mail}"><br>
 			<div th:if="${#fields.hasErrors('mail')}" th:errors="*{mail}"></div>
 			
+			<!-- パスワード入力フォーム -->
 			<label for="password">password:</label>
-			<textarea name="password" id="password" rows="2" cols="20" th:field="*{password}"></textarea><br>
+			<p th:text="${nullPassword}"></p>
+			<input name="password" id="password" th:field="*{password}"><br>
 			<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+			
+			<!-- ログインボタン -->
 			<input type="submit" value="ログイン">
 		</form>
 	</th:block>
