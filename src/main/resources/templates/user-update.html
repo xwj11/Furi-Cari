@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link th:href="@{/css/mypage.css}" rel="stylesheet">
+<title th:text="FuriCari- + ${title}">Insert title here</title>
+</head>
+<body>
+　　<div class="main">
+	<h1 th:text="FuriCari- + ${title}"></h1>
+	
+	<div th:object="${userForm}">
+	  <form method="post" action="#" th:action="@{/furicari/user-complete}">
+	    <table class="form" border="1" cellpadding="30" cellspacing="0">
+	      <tr>
+	        <td>ユーザー名</td>
+	        <td><input id="nickname" name="nickname" type="text" th:value="*{nickname}"></input></td>
+	      </tr>
+	      <tr>
+	        <td>メールアドレス</td>
+	        <td><input id="mail" name="mail" type="text" th:value="*{mail}"></input></td>
+	      </tr>
+	    </table>
+        <input type="submit" value="ユーザー情報更新">
+        <!-- <p><input class="button" type="button" value="削除" id="button2"></p> -->
+      </form>
+    </div>
+
+  </div>
+</body>
+</html>

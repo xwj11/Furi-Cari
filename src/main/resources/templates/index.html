@@ -11,11 +11,11 @@
   
   <div class="header">
   	<div class="button">
-  		<th:block th:unless="${userForm}">
+  		<th:block th:unless="${userForm.nickname}">
 	  		<a href="login">ログイン</a>
 	  		<a href="nuser">新規登録</a>
 	  	</th:block>
-  		<th:block th:if="${userForm}">
+  		<th:block th:if="${userForm.nickname}">
   			<a href="mypage" th:text="${userForm.nickname}"></a>
   			<a href="#">ログアウト</a>
   		</th:block>

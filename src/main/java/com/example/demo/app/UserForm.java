@@ -7,9 +7,12 @@ import javax.validation.constraints.Size;
 
 public class UserForm {
 	
+	private int id;
+	
 	@NotBlank
 	@Size(min = 1,max = 4,message = "１～４文字で入力してください")
 	private String nickname;
+	@NotBlank
 	@Email(message="emailを入力してください")
 	private String mail;
 	@NotBlank
@@ -17,6 +20,14 @@ public class UserForm {
 	private String password;
 	
 	public UserForm() {
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	public String getNickname() {

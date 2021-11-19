@@ -33,6 +33,12 @@ public class UserDaoImpl implements UserDao {
 		jdbcTemplate.update("INSERT INTO user(nickname, mail, password) VALUES(?, ?, ?)",
 				user.getNickname(), user.getMail(), user.getPassword());
 	}
+	
+	@Override
+	public void updateUser(User user) {
+		jdbcTemplate.update("UPDATE user SET nickname = ?, mail = ? WHERE id = ?",
+				user.getNickname(), user.getMail(), user.getId());
+	}
 
 	@Override
 	public List<User> getAll() {
@@ -70,7 +76,7 @@ public class UserDaoImpl implements UserDao {
 			getLogin.put("password",userLogin.getPassword());
 			return getLogin;
 		} catch (EmptyResultDataAccessException e) {
-          System.out.println("—áŠO‚ª”­¶‚µ‚Ü‚µ‚½");
+          System.out.println("ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½ï¿½ï¿½");
           Map<String, Object> notLogin = new HashMap<>();
           return notLogin;
         }

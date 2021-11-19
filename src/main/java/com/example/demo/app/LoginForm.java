@@ -1,11 +1,11 @@
 package com.example.demo.app;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 public class LoginForm {
-	@NotNull
+	@NotBlank
 	private String mail;
-	@NotNull
+	@NotBlank
 	private String password;
 	
 	public LoginForm() {
