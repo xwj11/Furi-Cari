@@ -61,9 +61,9 @@ public class MainController {
 			BindingResult result,
 			Model model) {
 		if(result.hasErrors()) {
-			return "/nuser";
+			return "nuser";
 		}
-		return "/finish";
+		return "finish";
 	}
 	
 	//新規登録に戻る
@@ -102,6 +102,39 @@ public class MainController {
 		
 		return "mypage";
 	}
+	
+	//ユーザー情報の確認ページ
+	@GetMapping("/user-update")
+	public String update(UserForm userForm,
+			Model model) {
+		return "/user-update";
+	}
+	
+	//ユーザー情報の更新
+	@PostMapping("/user-complete")
+	public String update(@Validated UserForm userForm,
+			BindingResult result,
+			Model model,
+			RedirectAttributes redirectAttributes) {
+		if(result.hasErrors()) {
+			return "user-update";
+		}
+		//DB処理
+		User user = new User();
+		user.setNickname(userForm.getNickname());
+		user.setMail(userForm.getMail());
+		user.setPassword(userForm.getPassword());
+		user.setId(userForm.getId());
+		
+		userService.update(user);
+		redirectAttributes.addFlashAttribute("complete", "完了しました");
+		return "redirect:/furicari/mypage";
+	}
+	
+	
+	
+	
+	
 	
 	@GetMapping("/login")
 	public String login(LoginForm loginForm,Model model) {
@@ -149,8 +182,9 @@ public class MainController {
 		userForm.setNickname((String)getLogin.get("nickname"));
 		userForm.setMail((String)getLogin.get("mail"));
 		userForm.setPassword((String)getLogin.get("password"));
-			
-		//DB参照後一致するメアド、PWの有無のチェック
+		userForm.setId((int)getLogin.get("id"));
+		//セッションのuserFormにセット↑
+    
 		boolean isEmpty = getLogin.isEmpty();
 		model.addAttribute("getLogin", getLogin);		
 		if(isEmpty) {

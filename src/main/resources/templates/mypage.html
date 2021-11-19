@@ -8,24 +8,29 @@
 <body>
 　　<div class="main">
 	<h1 th:text="FuriCari- + ${title}"></h1>
+
+	<h2 th:text="${complete}"></h2>
+	<a href="index">TOPページ</a>
+	<div th:object="${userForm}">
 	<a href="index">top画面に戻る</a>
+
 	<table class="form" border="1" cellpadding="30" cellspacing="0">
 	  <tr>
 	    <td>ユーザー名</td>
-	    <td><input type="text" name="name" th:value="${userForm.nickname}"></input></td>
+	    <td type="text" name="name" th:text="*{nickname}"></td>
 	  </tr>
 	  <tr>
 	    <td>メールアドレス</td>
-	    <td><input type="text" name="mail" th:value="${userForm.mail}"></input></td>
+	    <td type="text" name="mail" th:text="*{mail}"></td>
 	  </tr>
 	  <tr>
 	    <td>パスワード</td>
-	    <td><input type="text" name="password" th:field="${userForm.password}"></input></td>
+	    <td type="text" name="password" th:text="*{password}"></td>
 	  </tr>
 	</table>
-    <p><input class="button" type="button" value="更新" id="button2"></p>
-    <p><input class="button" type="button" value="削除" id="button2"></p>
-
+	<a href="user-update">ユーザー情報の更新</a>
+	
+    </div>
   </div>
 </body>
 </html>

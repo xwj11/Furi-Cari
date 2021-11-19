@@ -9,6 +9,8 @@ public interface UserDao {
 	
 	void createUser(User user);
 	
+	void updateUser(User user);
+	
 	Map<String,Object> loginDataUser(User user);
 	
 	List<User> getAll();

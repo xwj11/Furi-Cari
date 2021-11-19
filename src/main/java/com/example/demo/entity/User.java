@@ -1,6 +1,10 @@
 package com.example.demo.entity;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class User {
+	
 	private int id;
 	private String nickname;
 	private String mail;

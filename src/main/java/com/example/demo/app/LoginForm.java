@@ -9,6 +9,7 @@ public class LoginForm {
 	
 	private String mail;
 	private String password;
+  
 	public LoginForm() {
 	}
 	
