@@ -11,13 +11,15 @@
   
   <div class="header">
   	<div class="button">
+
   		<th:block th:if="${userForm.nickname == null}">
 	  		<a href="login">ログイン</a>
 	  		<a href="nuser">新規登録</a>
 	  	</th:block>
   		<th:block th:if="${userForm.nickname != null}">
   			<a href="mypage" th:text="${userForm.nickname}"></a>
-  			<a href="login">ログアウト</a>
+
+  			<a href="logout">ログアウト</a>
   		</th:block>
   	</div>
   </div>

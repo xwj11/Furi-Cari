@@ -9,6 +9,8 @@ public interface UserService {
 
 	void create(User user);
 	
+	void update(User user);
+	
 	Map<String,Object> loginData(User user);
 	
 	List<User> getAll();

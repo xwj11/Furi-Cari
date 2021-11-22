@@ -1,17 +1,19 @@
 package com.example.demo.app;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 public class LoginForm {
-	@NotNull
-	private String mail;
-	@NotNull
-	private String password;
 	
+	private String mail;
+	private String password;
+  
 	public LoginForm() {
 	}
 	
-	public String getMail() {
+	public String getMail() {		
 		return mail;
 	}
 	public void setMail(String mail) {

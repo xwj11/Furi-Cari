@@ -1,6 +1,10 @@
 package com.example.demo.entity;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
 public class User {
+	
 	private int id;
 	private String nickname;
 	private String mail;
@@ -13,8 +17,8 @@ public class User {
 		return id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(Object object) {
+		this.id = (Integer) object;
 	}
 
 	public String getNickname() {

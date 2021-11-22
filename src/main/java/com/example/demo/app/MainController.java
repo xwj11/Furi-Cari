@@ -3,6 +3,8 @@ package com.example.demo.app;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,8 +15,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.thymeleaf.exceptions.TemplateInputException;
 
 import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
@@ -61,9 +63,9 @@ public class MainController {
 			BindingResult result,
 			Model model) {
 		if(result.hasErrors()) {
-			return "/nuser";
+			return "nuser";
 		}
-		return "/finish";
+		return "finish";
 	}
 	
 	//新規登録に戻る
@@ -73,12 +75,18 @@ public class MainController {
 		return "nuser";
 	}
 	
+	@RequestMapping("/logout")
+	public String logout(SessionStatus sessionStatus ) {
+		sessionStatus.setComplete();
+		return "redirect:/furicari/index";
+	}
 	//DBへ登録
 	@PostMapping("/complete")
 	public String complete(@Validated UserForm userForm,
 			BindingResult result,
 			Model model,
-			RedirectAttributes redirectAttributes) {
+			RedirectAttributes redirectAttributes,
+			SessionStatus sessionStatus) {
 		if(result.hasErrors()) {
 			model.addAttribute("title", "InquiryForm");
 			return "nuser";
@@ -91,7 +99,8 @@ public class MainController {
 		
 		userService.create(user);
 		redirectAttributes.addFlashAttribute("complete", "完了しました");
-		return "redirect:/furicari/nuser";
+		sessionStatus.setComplete();
+		return "register";
 	}
 	
 
@@ -103,11 +112,44 @@ public class MainController {
 		return "mypage";
 	}
 	
+	//ユーザー情報の確認ページ
+	@GetMapping("/user-update")
+	public String update(UserForm userForm,
+			Model model) {
+		return "/user-update";
+	}
+	
+	//ユーザー情報の更新
+	@PostMapping("/user-complete")
+	public String update(@Validated UserForm userForm,
+			BindingResult result,
+			Model model,
+			RedirectAttributes redirectAttributes) {
+		if(result.hasErrors()) {
+			return "user-update";
+		}
+		//DB処理
+		User user = new User();
+		user.setNickname(userForm.getNickname());
+		user.setMail(userForm.getMail());
+		user.setPassword(userForm.getPassword());
+		user.setId(userForm.getId());
+		
+		userService.update(user);
+		redirectAttributes.addFlashAttribute("complete", "完了しました");
+		return "redirect:/furicari/mypage";
+	}
+	
+	
+	
+	
+	
+	
 	@GetMapping("/login")
 	public String login(LoginForm loginForm,Model model) {
 		return "login";
 	}
-	/**/
+	
 	@PostMapping("/index")
 	public String index(@Validated LoginForm loginForm,
 			UserForm userForm,
@@ -115,10 +157,28 @@ public class MainController {
 			Model model,
 			RedirectAttributes redirectAttributes) {
 		
-		if(result.hasErrors()) {	
-			//エラー時	
-			return "login";
+		//バリデーション
+		final int checkNumber = 0;
+		int checker = checkNumber;
+		if(loginForm.getMail() == null) {
+			redirectAttributes.addFlashAttribute("notMail", "メールを入力してください");	
+			checker ++;
+		}else {
+			int checkMail = loginForm.getMail().indexOf("@");
+			if(checkMail == -1) {
+				redirectAttributes.addFlashAttribute("notMail", "正しいメールアドレスを入力してください"); 
+				checker ++;
+			}
 		}
+		if(loginForm.getPassword() == null) {
+			redirectAttributes.addFlashAttribute("nullPassword", "パスワードを入力してください");
+			checker ++;
+		}
+		if(checker > checkNumber) {
+			checker = checkNumber;
+			return "redirect:/furicari/login";
+		}
+			
 		//DB処理
 		User user = new User();
 		
@@ -127,18 +187,15 @@ public class MainController {
 		
 		Map<String,Object> getLogin = userService.loginData(user);
 		
-		
 		//セッションのuserFormにセット↓
 		userForm.setNickname((String)getLogin.get("nickname"));
 		userForm.setMail((String)getLogin.get("mail"));
 		userForm.setPassword((String)getLogin.get("password"));
+		userForm.setId(getLogin.get("id"));
 		//セッションのuserFormにセット↑
-		
+    
 		boolean isEmpty = getLogin.isEmpty();
-
-
-		model.addAttribute("getLogin", getLogin);
-		
+		model.addAttribute("getLogin", getLogin);		
 		if(isEmpty) {
 			redirectAttributes.addFlashAttribute("error", "メールアドレスまたはパスワードが間違っています");
 			return "redirect:/furicari/login";

@@ -22,6 +22,10 @@ public class UserServiceImpl implements UserService {
 	public void create(User user) {
 		userdao.createUser(user);
 	}
+	
+	public void update(User user) {
+		userdao.updateUser(user);
+	}
 
 	public List<User> getAll() {
 		return userdao.getAll();

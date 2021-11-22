@@ -33,6 +33,11 @@ public class UserDaoImpl implements UserDao {
 		jdbcTemplate.update("INSERT INTO user(nickname, mail, password) VALUES(?, ?, ?)",
 				user.getNickname(), user.getMail(), user.getPassword());
 	}
+	
+	public void updateUser(User user) {
+		jdbcTemplate.update("UPDATE user SET nickname = ?, mail = ? WHERE id = ?",
+				user.getNickname(), user.getMail(), user.getId());
+	}
 
 
 	public List<User> getAll() {
@@ -41,7 +46,7 @@ public class UserDaoImpl implements UserDao {
 		List<User> list = new ArrayList<User>();
 		for(Map<String, Object> result : resultList) {
 			User user = new User();
-			//user.setId((int)result.get("id"));
+			user.setId(result.get("id"));
 			user.setNickname((String)result.get("nickname"));
 			user.setMail((String)result.get("mail"));
 			user.setPassword((String)result.get("password"));			
@@ -61,16 +66,16 @@ public class UserDaoImpl implements UserDao {
 			userLogin.setNickname((String)loginUserData.get("nickname"));
 			userLogin.setMail((String)loginUserData.get("mail"));
 			userLogin.setPassword((String)loginUserData.get("password"));
-			
+			userLogin.setId(loginUserData.get("id"));
 			 
-			 
-			
 			getLogin.put("nickname",userLogin.getNickname());
 			getLogin.put("mail",userLogin.getMail());
 			getLogin.put("password",userLogin.getPassword());
+			getLogin.put("id",userLogin.getId());
 			return getLogin;
 		} catch (EmptyResultDataAccessException e) {
           System.out.println("��O���������܂���");
+
           Map<String, Object> notLogin = new HashMap<String, Object>();
           return notLogin;
         }
